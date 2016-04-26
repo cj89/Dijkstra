@@ -54,6 +54,11 @@ namespace Dijkstra.Classes
                     Console.WriteLine("Ha kész, nyomjon meg egy gombot!");
                     Console.ReadKey();
                 }
+                else
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+                }
             }
 
             try
