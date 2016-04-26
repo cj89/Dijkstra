@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+//Dániel Egyed
+
 namespace Dijkstra.Classes
 {
     /// <summary>
