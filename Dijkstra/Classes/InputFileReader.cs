@@ -68,10 +68,13 @@ namespace Dijkstra.Classes
 
         public void FileRead()
         {
+            FileStream fs = null;
+            StreamReader sr = null;
+
             try
             {
-                FileStream fs = new FileStream(_inputFile, FileMode.Open);
-                StreamReader sr = new StreamReader(fs);
+                fs = new FileStream(_inputFile, FileMode.Open);
+                sr = new StreamReader(fs);
 
                 string line = sr.ReadLine();
                 string[] lineSplit = line.Split(' ');
@@ -104,6 +107,18 @@ namespace Dijkstra.Classes
             catch (Exception e)
             {
                 throw;
+            }
+            finally
+            {
+                if(sr != null)
+                {
+                    sr.Close();
+                }
+
+                if (fs != null)
+                {
+                    fs.Close();
+                }
             }
         }
 
