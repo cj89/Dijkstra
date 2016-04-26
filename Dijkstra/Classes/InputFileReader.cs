@@ -66,7 +66,7 @@ namespace Dijkstra.Classes
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                throw;
             }
         }
 
