@@ -42,26 +42,19 @@ namespace Dijkstra.Classes
 
         public InputFileReader()
         {
-            bool InputFileInfoError = false;
-
-            do
+            try
             {
-                try
+                InputCheck();
+            }
+            catch (Exception e)
+            {
+                if ("InputFileInfo.Exists" == e.Message)
                 {
-                    InputFileInfoError = false;
-                    InputCheck();
+                    Console.WriteLine("Kérem töltse ki az Input mappában a Graph.txt fájlt!");
+                    Console.WriteLine("Ha kész, nyomjon meg egy gombot!");
+                    Console.ReadKey();
                 }
-                catch (Exception e)
-                {
-                    if ("InputFileInfo.Exists" == e.Message)
-                    {
-                        InputFileInfoError = true;
-                        Console.WriteLine("Kérem töltse ki a Graph.txt fájl!");
-                        Console.WriteLine("Ha kész, nyomjon meg egy gombot!");
-                        Console.ReadKey();
-                    }
-                }
-            } while (InputFileInfoError);
+            }
 
             try
             {
@@ -92,8 +85,7 @@ namespace Dijkstra.Classes
                 _inputMatrix = new int[EdgeNumber, 3];
 
                 int i = 0;
-
-                while(line != null)
+                while(line != null && i < EdgeNumber)
                 {
                     lineSplit = line.Split(' ');            
 
