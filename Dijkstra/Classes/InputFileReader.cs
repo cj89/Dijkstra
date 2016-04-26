@@ -56,7 +56,6 @@ namespace Dijkstra.Classes
                 }
                 else
                 {
-                    Console.WriteLine(e.Message);
                     throw;
                 }
             }
