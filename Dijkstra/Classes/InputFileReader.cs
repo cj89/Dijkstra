@@ -10,7 +10,7 @@ namespace Dijkstra.Classes
     /// </summary>
     class InputFileReader
     {
-        private int[,] _inputmatrix;
+        private int[,] _inputMatrix;
         private string _inputFile;
 
         /// <summary>
@@ -63,45 +63,56 @@ namespace Dijkstra.Classes
                 }
             } while (InputFileInfoError);
 
-
-            FileRead();
-
+            try
+            {
+                FileRead();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public void FileRead()
         {
-            FileStream fs = new FileStream(_inputFile, FileMode.Open);
-
-            StreamReader sr = new StreamReader(fs);
-
-            string line = sr.ReadLine();
-            string[] lineSplit = line.Split(' ');
-
-            NodeNumber = int.Parse(lineSplit[0]);
-            EdgeNumber = int.Parse(lineSplit[1]);
-            StartNode = int.Parse(lineSplit[2]);
-
-            line = sr.ReadLine();
-
-            _inputmatrix = new int[EdgeNumber, 3];
-
-            int i = 0;
-            while(line != null)
+            try
             {
-                lineSplit = line.Split(' ');            
+                FileStream fs = new FileStream(_inputFile, FileMode.Open);
+                StreamReader sr = new StreamReader(fs);
 
-                for(int j = 0; j < 3; j++)
+                string line = sr.ReadLine();
+                string[] lineSplit = line.Split(' ');
+
+                NodeNumber = int.Parse(lineSplit[0]);
+                EdgeNumber = int.Parse(lineSplit[1]);
+                StartNode = int.Parse(lineSplit[2]);
+
+                line = sr.ReadLine();
+
+                _inputMatrix = new int[EdgeNumber, 3];
+
+                int i = 0;
+
+                while(line != null)
                 {
-                    _inputmatrix[i, j] = int.Parse(lineSplit[j]);
+                    lineSplit = line.Split(' ');            
+
+                    for(int j = 0; j < 3; j++)
+                    {
+                        _inputMatrix[i, j] = int.Parse(lineSplit[j]);
+                    }
+
+                    i++;
+                    line = sr.ReadLine();
                 }
 
-                i++;
-                line = sr.ReadLine();
+                sr.Close();
+                fs.Close();
             }
-
-            sr.Close();
-            fs.Close();
-
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
         /// <summary>
