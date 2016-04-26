@@ -11,11 +11,21 @@ namespace Dijkstra.Classes
     class InputFileReader
     {
         private int[,] _inputmatrix;
+        private string _inputFile;
 
         /// <summary>
         ///Csúcsok száma
         /// </summary>
-        public int N
+        public int NodeNumber
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        ///Élek száma
+        /// </summary>
+        public int EdgeNumber
         {
             get;
             private set;
@@ -24,7 +34,7 @@ namespace Dijkstra.Classes
         /// <summary>
         /// Start-csúcs
         /// </summary>
-        public int S
+        public int StartNode
         {
             get;
             private set;
@@ -47,7 +57,7 @@ namespace Dijkstra.Classes
                     {
                         InputFileInfoError = true;
                         Console.WriteLine("Kérem töltse ki a Graph.txt fájl!");
-                        Console.WriteLine("Ha kész:,nyomjon meg egy gombot");
+                        Console.WriteLine("Ha kész, nyomjon meg egy gombot!");
                         Console.ReadKey();
                     }
                 }
@@ -60,7 +70,37 @@ namespace Dijkstra.Classes
 
         public void FileRead()
         {
-           
+            FileStream fs = new FileStream(_inputFile, FileMode.Open);
+
+            StreamReader sr = new StreamReader(fs);
+
+            string line = sr.ReadLine();
+            string[] lineSplit = line.Split(' ');
+
+            NodeNumber = int.Parse(lineSplit[0]);
+            EdgeNumber = int.Parse(lineSplit[1]);
+            StartNode = int.Parse(lineSplit[2]);
+
+            line = sr.ReadLine();
+
+            _inputmatrix = new int[EdgeNumber, 3];
+
+            int i = 0;
+            while(line != null)
+            {
+                lineSplit = line.Split(' ');            
+
+                for(int j = 0; j < 3; j++)
+                {
+                    _inputmatrix[i, j] = int.Parse(lineSplit[j]);
+                }
+
+                i++;
+                line = sr.ReadLine();
+            }
+
+            sr.Close();
+            fs.Close();
 
         }
 
@@ -71,7 +111,7 @@ namespace Dijkstra.Classes
         public void InputCheck()
         {
             string InputDirectoryPath = Directory.GetCurrentDirectory() + "\\Input";
-            string InputFile = InputDirectoryPath + "\\Graph.txt";
+            _inputFile = InputDirectoryPath + "\\Graph.txt";
 
             //Ha nem léteik a könyvtár
             if (false == Directory.Exists(InputDirectoryPath))
@@ -80,7 +120,7 @@ namespace Dijkstra.Classes
                 Directory.CreateDirectory(InputDirectoryPath);
             }
 
-            FileInfo InputFileInfo = new FileInfo(InputFile);
+            FileInfo InputFileInfo = new FileInfo(_inputFile);
 
             //Ha nem létezik a fájl
             if (false == InputFileInfo.Exists)
