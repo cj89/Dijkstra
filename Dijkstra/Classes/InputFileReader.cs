@@ -10,6 +10,8 @@ namespace Dijkstra.Classes
     /// </summary>
     class InputFileReader
     {
+        private int[,] _inputmatrix;
+
         /// <summary>
         ///Csúcsok száma
         /// </summary>
@@ -30,8 +32,35 @@ namespace Dijkstra.Classes
 
         public InputFileReader()
         {
-            InputCheck();
+            bool InputFileInfoError = false;
 
+            do
+            {
+                try
+                {
+                    InputFileInfoError = false;
+                    InputCheck();
+                }
+                catch (Exception e)
+                {
+                    if ("InputFileInfo.Exists" == e.Message)
+                    {
+                        InputFileInfoError = true;
+                        Console.WriteLine("Kérem töltse ki a Graph.txt fájl!");
+                        Console.WriteLine("Ha kész:,nyomjon meg egy gombot");
+                        Console.ReadKey();
+                    }
+                }
+            } while (InputFileInfoError);
+
+
+            FileRead();
+
+        }
+
+        public void FileRead()
+        {
+           
 
         }
 
@@ -59,6 +88,7 @@ namespace Dijkstra.Classes
                 //akkor létrehozzuk
                 StreamWriter CreateStreamWriter = InputFileInfo.CreateText();
                 CreateStreamWriter.Close();
+                throw new Exception("InputFileInfo.Exists");
             }
         }
     }
